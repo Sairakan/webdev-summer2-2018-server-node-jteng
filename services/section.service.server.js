@@ -35,20 +35,32 @@ module.exports = function (app) {
     const enrollStudentInSection = (req, res) => {
         var studentId = req.params['studentId'];
         var sectionId = req.params['sectionId'];
-        var enrollment = {
+        var newEnrollment = {
             student: studentId,
             section: sectionId
         };
 
-        sectionModel
-            .decrementSectionSeats(sectionId)
-            .then(() => {
-                return enrollmentModel
-                    .enrollStudentInSection(enrollment)
-            })
-            .then((enrollment) => {
-                res.json(enrollment);
-            })
+        sectionModel.findSectionById(sectionId)
+            .then(section => {
+                if (section.seats <= 0) {
+                    res.send(null);
+                } else {
+                    enrollmentModel.findEnrollment(studentId, sectionId)
+                        .then(enrollment => {
+                            if (enrollment) {
+                                res.send('already enrolled')
+                            } else {
+                                sectionModel.decrementSectionSeats(sectionId)
+                                    .then(() => {
+                                        return enrollmentModel.enrollStudentInSection(newEnrollment)
+                                    })
+                                    .then((enrollment) => {
+                                        res.json(enrollment);
+                                    });
+                            }
+                        });
+                }
+            });
     }
 
     const unenrollStudentFromSection = (req, res) => {

@@ -13,7 +13,14 @@ const unenrollStudentFromSection = (studentId, sectionId) => {
     return enrollmentModel.remove({
         student: studentId,
         section: sectionId
-    })
+    });
+}
+
+const findEnrollment = (studentId, sectionId) => {
+    return enrollmentModel.findOne({
+        student: studentId,
+        section: sectionId
+    });
 }
 
 const findSectionsForStudent = (studentId) => {
@@ -37,6 +44,7 @@ const deleteEnrollmentsWithStudent = (studentId) => {
 module.exports = {
     enrollStudentInSection,
     unenrollStudentFromSection,
+    findEnrollment,
     findSectionsForStudent,
     deleteEnrollmentsWithSection,
     deleteEnrollmentsWithStudent
