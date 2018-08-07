@@ -9,13 +9,35 @@ const enrollStudentInSection = (enrollment) => {
     return enrollmentModel.create(enrollment);
 }
 
+const unenrollStudentFromSection = (studentId, sectionId) => {
+    return enrollmentModel.remove({
+        student: studentId,
+        section: sectionId
+    })
+}
+
 const findSectionsForStudent = (studentId) => {
     return enrollmentModel
         .find({ student: studentId })
         .populate('section');
 }
 
+const deleteEnrollmentsWithSection = (sectionId) => {
+    return enrollmentModel.remove({
+        section: sectionId
+    });
+}
+
+const deleteEnrollmentsWithStudent = (studentId) => {
+    return enrollmentModel.remove({
+        student: studentId
+    });
+}
+
 module.exports = {
     enrollStudentInSection,
-    findSectionsForStudent
+    unenrollStudentFromSection,
+    findSectionsForStudent,
+    deleteEnrollmentsWithSection,
+    deleteEnrollmentsWithStudent
 };

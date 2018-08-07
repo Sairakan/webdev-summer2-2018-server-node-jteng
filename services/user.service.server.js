@@ -53,7 +53,7 @@ module.exports = (app) => {
             })
     }
     const profile = (req, res) => {
-        res.send(req.session['currentUser']);
+        res.json(req.session['currentUser']);
     }
     const findAllUsers = (req, res) => {
         userModel.findAllUsers()
@@ -72,13 +72,18 @@ module.exports = (app) => {
                 res.send(user);
             });
     }
+    const deleteUser = (req, res) => {
+        userModel.deleteUser(req.params['userId'])
+            .then(() => res.sendStatus(200));
+    }
 
     app.post('/api/login', login);
     app.post('/api/register', register);
     app.post('/api/logout', logout);
-    app.put('/api/user', updateUser);
+    app.put('/api/profile', updateUser);
     app.get('/api/profile', profile);
     app.get('/api/user', findAllUsers);
     app.get('/api/user/:userId', findUserById);
     app.get('/api/register/:username', findUserByUsername);
+    app.delete('/api/profile/:userId', deleteUser);
 }

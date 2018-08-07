@@ -2,15 +2,19 @@ var mongoose = require('mongoose');
 var sectionSchema = require('./section.schema.server');
 var sectionModel = mongoose.model('SectionModel', sectionSchema);
 
-function createSection(section) {
+const createSection = (section) => {
   return sectionModel.create(section);
 }
 
-function findSectionsForCourse(courseId) {
+const deleteSection = (sectionId) => {
+    return sectionModel.remove({_id: sectionId});
+}
+
+const findSectionsForCourse = (courseId) => {
   return sectionModel.find({courseId: courseId});
 }
 
-function decrementSectionSeats(sectionId) {
+const decrementSectionSeats = (sectionId) => {
   return sectionModel.update({
     _id: sectionId
   }, {
@@ -18,7 +22,7 @@ function decrementSectionSeats(sectionId) {
   });
 }
 
-function incrementSectionSeats(sectionId) {
+const incrementSectionSeats = (sectionId) => {
   return sectionModel.update({
     _id: sectionId
   }, {
@@ -28,6 +32,7 @@ function incrementSectionSeats(sectionId) {
 
 module.exports = {
   createSection,
+  deleteSection,
   findSectionsForCourse,
   decrementSectionSeats,
   incrementSectionSeats

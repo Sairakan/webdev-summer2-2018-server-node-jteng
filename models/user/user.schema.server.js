@@ -6,7 +6,6 @@ var userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    sections: [{type: mongoose.Schema.Types.ObjectId, ref: 'SectionModel'}]
-}, {collection: 'user'});
+}, { collection: 'user' });
 
 module.exports = userSchema;
