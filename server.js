@@ -18,9 +18,6 @@ app.use((req, res, next) => {
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 app.use(session({
-    store: new RedisStore({
-        url: 'redis://h:p7cc735781fad2544be6dbf24401643a06c2d1cea91bc2ebcf9612f8da0317d05@ec2-34-231-81-175.compute-1.amazonaws.com:33259'
-    }),
     resave: false,
     saveUninitialized: true,
     secret: 'secret556',
