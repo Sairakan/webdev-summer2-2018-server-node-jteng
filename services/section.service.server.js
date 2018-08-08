@@ -3,6 +3,13 @@ module.exports = function (app) {
     var sectionModel = require('../models/section/section.model.server');
     var enrollmentModel = require('../models/enrollment/enrollment.model.server');
 
+    const findSectionById = (req, res) => {
+        sectionModel.findSectionById(req.params['sectionId'])
+            .then(section => {
+                res.send(section);
+            });
+    }
+
     const createSection = (req, res) => {
         var section = req.body;
         sectionModel
@@ -10,6 +17,15 @@ module.exports = function (app) {
             .then((section) => {
                 res.json(section);
             })
+    }
+
+    const updateSection = (req, res) => {
+        var sectionId = req.params['sectionId'];
+        var section = req.body;
+        sectionModel.updateSection(sectionId, section)
+            .then(() => {
+                res.send(section);
+            });
     }
 
     const deleteSection = (req, res) => {
@@ -85,7 +101,9 @@ module.exports = function (app) {
             });
     }
 
+    app.get('/api/section/:sectionId', findSectionById);
     app.post('/api/course/:courseId/section', createSection);
+    app.put('/api/section/:sectionId', updateSection);
     app.delete('/api/section/:sectionId', deleteSection);
     app.get('/api/course/:courseId/section', findSectionsForCourse);
     app.post('/api/student/:studentId/section/:sectionId', enrollStudentInSection);

@@ -10,6 +10,10 @@ const createSection = (section) => {
   return sectionModel.create(section);
 }
 
+const updateSection = (sectionId, section) => {
+  return sectionModel.update({_id: sectionId}, section);
+}
+
 const deleteSection = (sectionId) => {
   return sectionModel.remove({ _id: sectionId });
 }
@@ -37,6 +41,7 @@ const incrementSectionSeats = (sectionId) => {
 module.exports = {
   findSectionById,
   createSection,
+  updateSection,
   deleteSection,
   findSectionsForCourse,
   decrementSectionSeats,
