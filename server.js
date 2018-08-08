@@ -19,7 +19,10 @@ var session = require('express-session')
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    secret: 'any string'
+    secret: 'secret556',
+    cookie: {
+        maxAge: 1000*60*30
+    }
 }));
 
 var bodyParser = require('body-parser');
