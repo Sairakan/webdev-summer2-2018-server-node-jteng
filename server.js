@@ -4,8 +4,8 @@ mongoose.connect('mongodb://jteng:routermaker22@ds113402.mlab.com:13402/webdev-s
 var express = require('express')
 var app = express()
 
-const origin = "http://localhost:4200";
-// const origin = "https://webdev-client-angular-jteng.herokuapp.com";
+// const origin = "http://localhost:4200";
+const origin = (process.env.PORT? "https://webdev-client-angular-jteng.herokuapp.com" : "http://localhost:4200");
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin",
