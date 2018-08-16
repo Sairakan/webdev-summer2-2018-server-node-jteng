@@ -1,21 +1,36 @@
 const mongoose = require('mongoose')
-const schema = require('submission.schema.server')
-const model = mongoose.model('SubmissionModel', schema)
+const schema = require('./submission.schema.server')
+const submissionModel = mongoose.model('SubmissionModel', schema)
 
 createSubmission = submission =>
-  mongoose.create(submission)
+  submissionModel.create(submission)
 
 findAllSubmissions = () =>
-  mongoose.find()
+  submissionModel.find()
+
+findSubmissionById = id =>
+  submissionModel.findOne({ _id: id })
+    .populate({
+      path: 'quiz',
+      populate: {
+        path: 'questions'
+      }
+    })
+    .populate('answers.question')
+    .populate('student')
+    .exec()
 
 findAllSubmissionsForStudent = studentId =>
-  mongoose.find({student: studentId})
+  submissionModel.find({ student: studentId })
 
 findAllSubmissionsForQuiz = quizId =>
-  mongoose.find({quiz: quizId})
+  submissionModel.find({ quiz: quizId })
+    .populate('student')
 
 module.exports = {
-  createSubmission, findAllSubmissions,
+  createSubmission,
+  findAllSubmissions,
+  findSubmissionById,
   findAllSubmissionsForStudent,
   findAllSubmissionsForQuiz
 }

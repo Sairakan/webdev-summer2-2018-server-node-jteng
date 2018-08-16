@@ -9,16 +9,13 @@ module.exports = mongoose.Schema({
     ref: 'QuizModel'
   },
   answers: [{
-    fillBlanksAnswers: {
-      variable: String,
-      value: String
-    },
-      multipleChoiceAnswer: Number,
-    trueFalseAnswer: Boolean,
-    essayAnswer: String,
     question: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'QuestionModel'
-    }
+    },
+    essayAnswer: String,
+    fillBlanksAnswers: [String],
+    trueFalseAnswer: Boolean,
+    multipleChoiceAnswer: Number
   }]
-}, {collection: 'submission'})
+}, { collection: 'submission', timestamps: { createdAt: 'createdAt' } })
